@@ -1,6 +1,6 @@
 package com.brain.lab19;
 
-public class GameConsole {
+public class GameConsole implements Powered{
     private Brand brand = Brand.MICROSOFT;
     private Model model = Model.XBOX_360;
     private String serial = "XC123QeWR";
@@ -19,7 +19,18 @@ public class GameConsole {
         this.serial = serial;
    }
 
-    class Gamepad {
+    @Override
+    public void powerOn() {
+
+    }
+
+    @Override
+    public void powerOff() {
+
+    }
+
+
+    class Gamepad implements Powered{
         private Brand brand = Brand.MICROSOFT;
         private String consoleSerial;
         private final int connectedNumber;
@@ -35,12 +46,22 @@ public class GameConsole {
             System.out.println("Выкл");
         }
 
-        public Gamepad(Brand brand, int connectedNumber) {
+         private Gamepad(Brand brand, int connectedNumber) {
             this.brand = brand;
             this.connectedNumber = connectedNumber;
             consoleSerial = serial;
             Gamepad firstGamepad = new Gamepad(brand,1);
             Gamepad secondGamepad = new Gamepad(brand,2);
+        }
+
+        @Override
+        public void powerOn() {
+
+        }
+
+        @Override
+        public void powerOff() {
+
         }
     }
 }

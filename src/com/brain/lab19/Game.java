@@ -1,11 +1,10 @@
 package com.brain.lab19;
 
-import javax.xml.stream.FactoryConfigurationError;
 
 public class Game {
     private final String name;
     private final Ganre ganre;
-    private final Type type;
+    private Type type;
 
     private Game(String name, Ganre ganre, Type type) {
         this.name = name;
@@ -21,44 +20,42 @@ public class Game {
         return ganre;
     }
 
-    public Type getType() {
-        return type;
-    }
 
     public enum Type {
         VIRTUAL,
         PHYSICAL;
     }
 
-//    static GameDisk getDisk() {
-//        return gameDisk;
-//    }
+    public static GameDisk getDisk(String name, Ganre ganre, String description) {
 
-    static class GameDisk extends Game{
-        private final String description;
-        private String gameData;
+        return new GameDisk(name, ganre, description);
 
-        private GameDisk(String name, Ganre ganre, Type type) {
-            super(name, ganre, type);
-            this.gameData = gameData;
-            this.description = "серия гоночных компьютерных игр";
-            final Game game = new Game(gameData, Ganre.RACE, Type.PHYSICAL);
+    }
+
+    public static VirtualGame getVirtualGame(String name, Ganre ganre) {
+        return new VirtualGame(name, ganre);
+
+    }
+
+    static class GameDisk extends Game {
+        private final String description; // описание
+
+        private GameDisk(String name, Ganre ganre, String description) {
+            super(name, ganre, Type.PHYSICAL);
+            this.description = description;
         }
-
 
         public String getDescription() {
             return description;
         }
     }
 
-    static class VirtualGame {
+    static class VirtualGame extends Game {
         private int rating;
-        private final String gameData;
 
-        private VirtualGame(int rating, String gameData) {
-            this.rating = 5;
-            this.gameData = "Dota 2";
-            final Game game = new Game(gameData, Ganre.ACTION, Type.VIRTUAL);
+
+        private VirtualGame(String name, Ganre ganre) {
+            super(name, ganre, Type.VIRTUAL);
         }
 
         public int getRating() {
@@ -68,5 +65,34 @@ public class Game {
         public void setRating(int rating) {
             this.rating = rating;
         }
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Game game = (Game) o;
+
+        if (name != null ? !name.equals(game.name) : game.name != null) return false;
+        if (ganre != game.ganre) return false;
+        return type == game.type;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (ganre != null ? ganre.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "name='" + name + '\'' +
+                ", ganre=" + ganre +
+                '}';
     }
 }
