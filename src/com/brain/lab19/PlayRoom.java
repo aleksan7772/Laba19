@@ -1,7 +1,10 @@
 package com.brain.lab19;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlayRoom {
     public static void main(String[] args) {
@@ -17,6 +20,10 @@ public class PlayRoom {
         virtualGame.add(Game.getVirtualGame("MotoGP", Ganre.SPORT));
         GameConsole gameConsole = new GameConsole(Brand.SONY,"6165486");
         //        for (Game game : physicalGame) System.out.println(game);
+        List<Game> physicalGameS =physicalGame.stream()
+                .sorted(Comparator.comparing(Game::getGanre))
+                .collect(Collectors.toCollection(ArrayList::new));
+        System.out.println();
 
     }
 
